@@ -1,54 +1,74 @@
 {% extends "base.html" %}
 
-{% block title %}Welcome{% endblock %}
+{% block title %}Welcome to CodeMaster Tutorials{% endblock %}
 
 {% block content %}
-<div class="container text-center">
-
-    <div class="jumbotron bg-light py-5 mb-4">
-        <h1 class="display-4">Welcome to My Website</h1>
-        <p class="lead">This is a versatile template for creating any type of informative webpage.</p>
-        <a href="{{ url_for('crud') }}" class="btn btn-primary btn-lg">Get Started</a>
+<div class="container mt-5">
+    <!-- Hero Section -->
+    <div class="text-center">
+        <h1 class="display-4 fw-bold text-primary">Welcome to CodeMaster Tutorials</h1>
+        <p class="lead text-secondary">
+            Learn and manage programming tutorials, resources, and team efficiently. Your one-stop solution for growth in the tech industry.
+        </p>
+        {% if session.get('user_id') %}
+        <a class="btn btn-primary btn-lg" href="{{ url_for('usuario_perfil') }}">Manage Usuarios & Perfiles</a>
+        <a class="btn btn-secondary btn-lg" href="{{ url_for('empleado_departamento') }}">Manage Empleados & Departamentos</a>
+        {% else %}
+        <a class="btn btn-primary btn-lg" href="{{ url_for('login') }}">Login</a>
+        {% endif %}
     </div>
 
-    <div class="row">
+    <!-- Features Section -->
+    <div class="row text-center mt-5">
         <div class="col-md-4">
-            <div class="card">
-                <img src="{{ url_for('static', filename='img/feature1.jpg') }}" class="card-img-top" alt="Feature 1">
+            <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Feature 1</h5>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <h5 class="card-title fw-bold text-primary">Track Progress</h5>
+                    <p class="card-text">Monitor team performance and resource utilization effectively.</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card">
-                <img src="{{ url_for('static', filename='img/feature2.jpg') }}" class="card-img-top" alt="Feature 2">
+            <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Feature 2</h5>
-                    <p class="card-text">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <h5 class="card-title fw-bold text-primary">Manage Resources</h5>
+                    <p class="card-text">Organize and manage tutorials, profiles, and departments in one place.</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card">
-                <img src="{{ url_for('static', filename='img/feature3.jpg') }}" class="card-img-top" alt="Feature 3">
+            <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Feature 3</h5>
-                    <p class="card-text">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                    <h5 class="card-title fw-bold text-primary">Collaborate Efficiently</h5>
+                    <p class="card-text">Empower your team with structured access and seamless collaboration.</p>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- About Section -->
     <div class="row mt-5">
         <div class="col-md-6">
-            <h2>About Our Website</h2>
-            <p>This template is designed to adapt to various types of web applications. It provides a clean and professional layout for showcasing information and features.</p>
+            <h2 class="fw-bold">About CodeMaster Tutorials</h2>
+            <p class="text-secondary">
+                CodeMaster Tutorials is a platform designed for tech enthusiasts and professionals to manage programming tutorials, employee data, and organizational departments efficiently. Whether you are an administrator or an employee, our intuitive interface and powerful features ensure seamless operations.
+            </p>
+            <a class="btn btn-outline-primary" href="{{ url_for('login') }}">Get Started</a>
         </div>
         <div class="col-md-6">
-            <img src="{{ url_for('static', filename='img/about.jpg') }}" alt="About" class="img-fluid rounded">
+            <img src="{{ url_for('static', filename='img/hero-image.jpg') }}" alt="About Us" class="img-fluid rounded shadow-sm">
         </div>
+    </div>
+
+    <!-- Footer Call-to-Action -->
+    <div class="text-center mt-5 py-5 bg-light shadow-sm rounded">
+        <h3 class="fw-bold">Ready to Manage Your Tutorials?</h3>
+        <p class="text-secondary">Join CodeMaster Tutorials and take your team's productivity to the next level.</p>
+        {% if session.get('user_id') %}
+        <a class="btn btn-primary btn-lg" href="{{ url_for('usuario_perfil') }}">Go to Dashboard</a>
+        {% else %}
+        <a class="btn btn-primary btn-lg" href="{{ url_for('login') }}">Login</a>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

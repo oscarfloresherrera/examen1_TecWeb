@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Usuarios & Perfiles{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-4">Usuarios</h2>
+    {% if session['role'] == 'Administrador' %}
+    <form method="post" class="mb-4">
+        <input type="hidden" name="tipo" value="usuario">
+        <div class="row">
+            <div class="col-md-3">
+                <input type="text" name="nombre" class="form-control" placeholder="Nombre" required>
+            </div>
+            <div class="col-md-3">
+                <input type="text" name="apellido" class="form-control" placeholder="Apellido" required>
+            </div>
+            <div class="col-md-2">
+                <input type="text" name="usuario" class="form-control" placeholder="Usuario" required>
+            </div>
+            <div class="col-md-2">
+                <input type="password" name="contrasena" class="form-control" placeholder="Contraseña" required>
+            </div>
+            <div class="col-md-2">
+                <select name="id_perfil" class="form-select" required>
+                    {% for perfil in perfiles %}
+                    <option value="{{ perfil[0] }}">{{ perfil[1] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Add Usuario</button>
+    </form>
+    {% endif %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Usuario</th>
+                {% if session['role'] == 'Administrador' %}
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario[0] }}</td>
+                <td>{{ usuario[1] }} {{ usuario[2] }}</td>
+                <td>{{ usuario[3] }}</td>
+                {% if session['role'] == 'Administrador' %}
+                <td>
+                    <a href="{{ url_for('edit_usuario_perfil', tipo='usuario', id=usuario[0]) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{{ url_for('delete_usuario_perfil', tipo='usuario', id=usuario[0]) }}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2 class="mt-5">Perfiles</h2>
+    {% if session['role'] == 'Administrador' %}
+    <form method="post" class="mb-4">
+        <input type="hidden" name="tipo" value="perfil">
+        <div class="row">
+            <div class="col-md-10">
+                <input type="text" name="nombre_perfil" class="form-control" placeholder="Nombre del Perfil" required>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success w-100">Add Perfil</button>
+            </div>
+        </div>
+    </form>
+    {% endif %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                {% if session['role'] == 'Administrador' %}
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for perfil in perfiles %}
+            <tr>
+                <td>{{ perfil[0] }}</td>
+                <td>{{ perfil[1] }}</td>
+                {% if session['role'] == 'Administrador' %}
+                <td>
+                    <a href="{{ url_for('edit_usuario_perfil', tipo='perfil', id=perfil[0]) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{{ url_for('delete_usuario_perfil', tipo='perfil', id=perfil[0]) }}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

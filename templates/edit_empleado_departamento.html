@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Edit {{ tipo.capitalize() }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Edit {{ tipo.capitalize() }}</h2>
+    <form method="post">
+        {% if tipo == "empleado" %}
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ record[1] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="apellido" name="apellido" value="{{ record[2] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text" class="form-control" id="telefono" name="telefono" value="{{ record[3] }}">
+        </div>
+        <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="direccion" name="direccion" value="{{ record[4] }}">
+        </div>
+        <div class="mb-3">
+            <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+            <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ record[5] }}">
+        </div>
+        <div class="mb-3">
+            <label for="observaciones" class="form-label">Observaciones</label>
+            <input type="text" class="form-control" id="observaciones" name="observaciones" value="{{ record[6] }}">
+        </div>
+        <div class="mb-3">
+            <label for="sueldo" class="form-label">Sueldo</label>
+            <input type="number" class="form-control" id="sueldo" name="sueldo" value="{{ record[7] }}">
+        </div>
+        <div class="mb-3">
+            <label for="id_departamento" class="form-label">Departamento</label>
+            <select name="id_departamento" id="id_departamento" class="form-select">
+                {% for departamento in departamentos %}
+                <option value="{{ departamento[0] }}" {% if departamento[0] == record[8] %}selected{% endif %}>{{ departamento[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% elif tipo == "departamento" %}
+        <div class="mb-3">
+            <label for="nombre_departamento" class="form-label">Nombre del Departamento</label>
+            <input type="text" class="form-control" id="nombre_departamento" name="nombre_departamento" value="{{ record[1] }}" required>
+        </div>
+        {% endif %}
+        <button type="submit" class="btn btn-success">Update</button>
+    </form>
+</div>
+{% endblock %}

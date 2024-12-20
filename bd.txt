@@ -1,19 +1,69 @@
-CREATE DATABASE task_web;
 
-\c task_web;
+CREATE DATABASE dbtutoriales;
 
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
+\c dbtutoriales;
+
+CREATE TABLE perfil (
+    id_perfil SERIAL PRIMARY KEY,
+    nombre VARCHAR(13) NOT NULL
 );
 
-CREATE TABLE items (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    description TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+CREATE TABLE usuario (
+    id_usuario SERIAL PRIMARY KEY,
+    nombre VARCHAR(45) NOT NULL,
+    apellido VARCHAR(45) NOT NULL,
+    usuario VARCHAR(45) NOT NULL UNIQUE,
+    contrasena VARCHAR(45) NOT NULL,
+    id_perfil INT NOT NULL,
+    CONSTRAINT fk_id_perfil FOREIGN KEY (id_perfil) REFERENCES perfil(id_perfil)
 );
 
-INSERT INTO users (username, password) VALUES ('test', '1379');
+CREATE TABLE departamento (
+    id_departamento SERIAL PRIMARY KEY,
+    nombre VARCHAR(45) NOT NULL
+);
+
+CREATE TABLE empleado (
+    id_empleado SERIAL PRIMARY KEY,
+    apellido VARCHAR(45) NOT NULL,
+    nombre VARCHAR(45) NOT NULL,
+    telefono INT,
+    direccion VARCHAR(45),
+    fecha_nacimiento DATE,
+    observaciones VARCHAR(45),
+    sueldo INT,
+    id_departamento INT NOT NULL,
+    CONSTRAINT fk_id_departamento FOREIGN KEY (id_departamento) REFERENCES departamento(id_departamento)
+);
+
+
+
+
+
+--INSERT DATE 
+
+INSERT INTO perfil (nombre) VALUES ('Administrador'); 
+INSERT INTO perfil (nombre) VALUES ('Empleado');      
+
+INSERT INTO usuario (nombre, apellido, usuario, contrasena, id_perfil) VALUES
+('Oscar', 'Flores Herrera', 'oscar', 'oscar', 1),  
+('Maria', 'Perez', 'maria', 'maria123', 2),      
+('Juan', 'Lopez', 'juan', 'juan123', 2),          
+('Ana', 'Sanchez', 'ana', 'ana123', 2),           
+('Carlos', 'Garcia', 'carlos', 'carlos123', 2);   
+
+INSERT INTO departamento (nombre) VALUES
+('Recursos Humanos'),
+('Tecnología'),
+('Finanzas'),
+('Marketing'),
+('Ventas');
+
+INSERT INTO empleado (apellido, nombre, telefono, direccion, fecha_nacimiento, observaciones, sueldo, id_departamento) VALUES
+('Perez', 'Maria', 72123456, 'Calle A #123', '1990-05-10', 'Buen desempeño', 3500, 1),
+('Lopez', 'Juan', 72456789, 'Calle B #456', '1985-03-15', 'Puntual', 4000, 2),
+('Sanchez', 'Ana', 71234567, 'Calle C #789', '1992-07-20', 'Responsable', 3700, 3),
+('Garcia', 'Carlos', 71122334, 'Calle D #012', '1988-10-25', 'Líder de equipo', 4500, 4),
+('Flores Herrera', 'Oscar', 72567890, 'Calle E #345', '1980-01-01', 'Administrador general', 8000, 5);
+

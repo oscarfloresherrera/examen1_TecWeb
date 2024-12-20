@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Empleados & Departamentos{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-4">Empleados</h2>
+    {% if session['role'] == 'Administrador' %}
+    <form method="post" class="mb-4">
+        <input type="hidden" name="tipo" value="empleado">
+        <div class="row">
+            <div class="col-md-2">
+                <input type="text" name="nombre" class="form-control" placeholder="Nombre" required>
+            </div>
+            <div class="col-md-2">
+                <input type="text" name="apellido" class="form-control" placeholder="Apellido" required>
+            </div>
+            <div class="col-md-2">
+                <input type="text" name="telefono" class="form-control" placeholder="Teléfono">
+            </div>
+            <div class="col-md-2">
+                <input type="text" name="direccion" class="form-control" placeholder="Dirección">
+            </div>
+            <div class="col-md-2">
+                <input type="date" name="fecha_nacimiento" class="form-control">
+            </div>
+            <div class="col-md-2">
+                <select name="id_departamento" class="form-select" required>
+                    {% for departamento in departamentos %}
+                    <option value="{{ departamento[0] }}">{{ departamento[1] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <input type="text" name="observaciones" class="form-control" placeholder="Observaciones">
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="sueldo" class="form-control" placeholder="Sueldo">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Add Empleado</button>
+    </form>
+    {% endif %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Departamento</th>
+                {% if session['role'] == 'Administrador' %}
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for empleado in empleados %}
+            <tr>
+                <td>{{ empleado[0] }}</td>
+                <td>{{ empleado[1] }}</td>
+                <td>{{ empleado[2] }}</td>
+                <td>{{ empleado[7] }}</td>
+                {% if session['role'] == 'Administrador' %}
+                <td>
+                    <a href="{{ url_for('edit_empleado_departamento', tipo='empleado', id=empleado[0]) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{{ url_for('delete_empleado_departamento', tipo='empleado', id=empleado[0]) }}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2 class="mt-5">Departamentos</h2>
+    {% if session['role'] == 'Administrador' %}
+    <form method="post" class="mb-4">
+        <input type="hidden" name="tipo" value="departamento">
+        <div class="row">
+            <div class="col-md-10">
+                <input type="text" name="nombre_departamento" class="form-control" placeholder="Nombre del Departamento" required>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success w-100">Add Departamento</button>
+            </div>
+        </div>
+    </form>
+    {% endif %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                {% if session['role'] == 'Administrador' %}
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for departamento in departamentos %}
+            <tr>
+                <td>{{ departamento[0] }}</td>
+                <td>{{ departamento[1] }}</td>
+                {% if session['role'] == 'Administrador' %}
+                <td>
+                    <a href="{{ url_for('edit_empleado_departamento', tipo='departamento', id=departamento[0]) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{{ url_for('delete_empleado_departamento', tipo='departamento', id=departamento[0]) }}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

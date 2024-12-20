@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Edit {{ tipo.capitalize() }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Edit {{ tipo.capitalize() }}</h2>
+    <form method="post">
+        {% if tipo == "usuario" %}
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ record[1] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="apellido" name="apellido" value="{{ record[2] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="usuario" class="form-label">Usuario</label>
+            <input type="text" class="form-control" id="usuario" name="usuario" value="{{ record[3] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_perfil" class="form-label">Perfil</label>
+            <select name="id_perfil" id="id_perfil" class="form-select">
+                {% for perfil in perfiles %}
+                <option value="{{ perfil[0] }}" {% if perfil[0] == record[4] %}selected{% endif %}>{{ perfil[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% elif tipo == "perfil" %}
+        <div class="mb-3">
+            <label for="nombre_perfil" class="form-label">Nombre del Perfil</label>
+            <input type="text" class="form-control" id="nombre_perfil" name="nombre_perfil" value="{{ record[1] }}" required>
+        </div>
+        {% endif %}
+        <button type="submit" class="btn btn-success">Update</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="container text-center">
+
+    <div class="jumbotron bg-light py-5 mb-4">
+        <h1 class="display-4">Welcome to My Website</h1>
+        <p class="lead">This is a versatile template for creating any type of informative webpage.</p>
+        <a href="{{ url_for('crud') }}" class="btn btn-primary btn-lg">Get Started</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ url_for('static', filename='img/feature1.jpg') }}" class="card-img-top" alt="Feature 1">
+                <div class="card-body">
+                    <h5 class="card-title">Feature 1</h5>
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ url_for('static', filename='img/feature2.jpg') }}" class="card-img-top" alt="Feature 2">
+                <div class="card-body">
+                    <h5 class="card-title">Feature 2</h5>
+                    <p class="card-text">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ url_for('static', filename='img/feature3.jpg') }}" class="card-img-top" alt="Feature 3">
+                <div class="card-body">
+                    <h5 class="card-title">Feature 3</h5>
+                    <p class="card-text">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h2>About Our Website</h2>
+            <p>This template is designed to adapt to various types of web applications. It provides a clean and professional layout for showcasing information and features.</p>
+        </div>
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename='img/about.jpg') }}" alt="About" class="img-fluid rounded">
+        </div>
+    </div>
+</div>
+{% endblock %}
